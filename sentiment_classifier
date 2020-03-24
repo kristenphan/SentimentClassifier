@@ -1,0 +1,62 @@
+# this function removes punctuation characters from a string and returned a modified string
+def strip_punctuation(str):
+    for char in str:
+        if char in punctuation_chars:
+            str = str.replace(char, "")
+    return str
+
+# this function returns the number of positive words mentioned in a string (e.g. a tweet)
+def get_pos(str, positive_words):
+    count = 0
+    words = strip_punctuation(str).strip().split()
+    for word in words:
+        if word.lower() in positive_words:
+            count += 1      
+    return count
+
+# this function returns the number of negative words mentioned in a string (e.g. a tweet)
+def get_neg(str, negative_words):
+    count = 0
+    words = strip_punctuation(str).strip().split()
+    for word in words:
+        if word.lower() in negative_words:
+            count += 1      
+    return count
+
+# create a list of punctuation characters to be removed from a string (e.g. a tweet)
+punctuation_chars = ["'", '"', ",", ".", "!", ":", ";", '#', '@']
+
+# create a list of positive words to be filtered in a string (e.g. a tweet)
+positive_words = []
+with open("positive_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            positive_words.append(lin.strip())
+
+# create a list of positive words to be filtered in a string (e.g. a tweet)
+negative_words = []
+with open("negative_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            negative_words.append(lin.strip())
+            
+# the below block of code opens a csv file containing Tweets data
+# in the input file (project_twitter_data.csv), the data is organized as 'tweet_text,retweet_count,reply_count\n' 
+# this function returns a new csv file that encapsulates key indicators on customer sentiment including:
+# number of retweets, number of replies, number of positive words in each tweet, number of negative words in each tweet, net score (how positive or negative a tweet is in overall)
+with open("project_twitter_data.csv", "r") as data:
+    with open("resulting_data.csv", "w") as results:
+        results.write("Number of Retweets, Number of Replies, Positive Score, Negative Score, Net Score" + "\n")
+        # remove the first line that says, 'tweet_text,retweet_count,reply_count\n'    
+        lines = data.readlines()[1:]
+        for line in lines:
+            words = line.split(",")
+            num_retweets = words[1].strip() # strip away any newline characters or white spaces
+            num_replies = words[2].strip() # strip away any newline characters or white spaces
+            tweet = words[0]
+            pos_score = get_pos(tweet, positive_words)
+            neg_score = get_neg(tweet, negative_words)
+            net_score = pos_score - neg_score
+            results.write("{}, {}, {}, {}, {}".format(str(num_retweets),str(num_replies),str(pos_score), str(neg_score), str(net_score))+"\n") 
+
+  
