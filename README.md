@@ -1,4 +1,4 @@
-# SentimentClassifier
+# Sentiment Classifier
 Course URL: https://www.coursera.org/learn/python-functions-files-dictionaries/
 
 __Assignment Description:__
