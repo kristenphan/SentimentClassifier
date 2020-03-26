@@ -2,7 +2,7 @@
 
 __Repository description:__
 <br/>
-This repository stores the work as part of the Python 3 Specialization courses. Course URL: https://www.coursera.org/learn/python-functions-files-dictionaries/. Code included in this repository is written by myself, Kristen Phan.
+This repository stores the work as part of the Python 3 Specialization courses by University of Michigan. Course URL: https://www.coursera.org/learn/python-functions-files-dictionaries/. Code included in this repository is written by myself, Kristen Phan.
 <br/>
 <br/>
 __Assignment Description:__
